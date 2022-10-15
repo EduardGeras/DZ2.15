@@ -79,13 +79,8 @@ public class IntegerListImpl implements IntegerList{
         // Создаём копию и сортируем
         Integer []arrayForSearch = toArray();
         sortInsertion(arrayForSearch);
-        // и проверяем наличие
-        for (int i = 0; i < capacity; i++) {
-            if (arrayForSearch[i].equals(item)) {
-                return true;
-            }
-        }
-        return false;
+        // и используем бинарный поиск
+        return binarySearch(arrayForSearch, item);
     }
 
     @Override
@@ -191,4 +186,22 @@ public class IntegerListImpl implements IntegerList{
             arr[j] = temp;
         }
     }
+
+    public static boolean binarySearch(Integer[] arr, int element) {
+        int min = 0;
+        int max = arr.length - 1;
+        while (min <= max) {
+            int mid = (min + max) / 2;
+            if (element == arr[mid]) {
+                return true;
+            }
+            if (element < arr[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
+    }
+
 }
